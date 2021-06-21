@@ -10,9 +10,6 @@
         margin: 0;
         padding: 0;
       }
-      #canvas {
-        border: 1px solid red;
-      }
     </style>
   </head>
   <body>
@@ -23,9 +20,9 @@
         2.修改‘上一次的值’为这次鼠标到达的值 这样下次移动永远都是上一个到达的点而不是一样的地方
       */
       const canvas = document.getElementById('canvas')
-      const ctx = canvas.getContext('2d')
       canvas.width = document.documentElement.clientWidth
       canvas.height = document.documentElement.clientHeight
+      const ctx = canvas.getContext('2d')
       ctx.fillStyle = 'black'
       ctx.strokeStyle = 'black'
       ctx.lineWidth = 7
@@ -35,12 +32,14 @@
       let IsTouchDevice = 'ontouchstart' in document.documentElement
       if (IsTouchDevice) {
         canvas.ontouchstart = e => {
+          // 移动端防止画布移动
+          e.preventDefault()
           let x = e.touches[0].clientX
           let y = e.touches[0].clientY
           last = [x, y]
-          console.log(last)
         }
         canvas.ontouchmove = e => {
+          e.preventDefault()
           let x = e.touches[0].clientX
           let y = e.touches[0].clientY
           drawline(last[0], last[1], x, y)
